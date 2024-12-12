@@ -38,7 +38,7 @@ function NavBar() {
             Weather
           </li>
           <li className="hover:text-blue-300 lg:hover:text-emerald-400 cursor-pointer">
-            Outfit Suggestions
+            Outfits
           </li>
           <li className="hover:text-blue-300 lg:hover:text-emerald-400 cursor-pointer">
             Settings
