@@ -31,9 +31,9 @@ function NavBar() {
       <div
         className={`${
           menuOpen ? "translate-x-0" : "-translate-x-full"
-        } fixed inset-y-0 left-0 w-64 mt-14 h-72 bg-slate-700 text-white transition-transform duration-500 lg:relative lg:translate-x-0 lg:flex lg:items-center lg:justify-between pt-8 rounded`}
+        } fixed inset-y-0 left-0 w-64 mt-14 h-72 bg-slate-700 text-white transition-transform duration-500 lg:relative lg:translate-x-0 lg:flex lg:items-center lg:justify-between pt-8 rounded `}
       >
-        <ul className="flex flex-col lg:flex-row lg:items-center gap-6 p-4 lg:p-0 tracking-widest font-sans font-thin">
+        <ul className="flex flex-col lg:flex-row lg:items-center gap-6 p-4 lg:p-0 tracking-widest font-sans font-thin opacity-100">
           <li className="hover:text-blue-400 lg:hover:text-emerald-400 cursor-pointer">
             Weather
           </li>
