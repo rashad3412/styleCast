@@ -38,7 +38,7 @@ function Dashboard() {
       <NavBar />
 
       {/* Introduction Section */}
-      <div className="bg-gradient-to-r from-blue-100 to-blue-300 text-gray-800 shadow-lg rounded-lg p-8 mt-10 max-w-3xl mx-auto">
+      <div className="bg-gradient-to-r from-blue-100 to-blue-300 text-gray-800 shadow-lg  p-8 mt-10 max-w-3xl mx-auto">
         <div className="flex flex-col items-center">
           {/* Icon */}
           <img

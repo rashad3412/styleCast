@@ -11,7 +11,7 @@ function WeatherCard({ weatherData }) {
   });
 
   return (
-    <div className="rounded-lg shadow-lg mt-20 p-6 bg-white text-gray-800 w-60 mx-auto border border-blue-100 ">
+    <div className="rounded-lg shadow-lg mt-10 p-6 bg-white text-gray-800 w-60 mx-auto border border-blue-100 ">
       <h2 className="text-xl font-thin text-center text-gray-700 mb-4 tracking-widest ">
         StyleCast
       </h2>
