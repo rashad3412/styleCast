@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import NavBar from "../components/NavBar";
 import WeatherCard from "../components/WeatherCard.jsx";
 import WeatherDisplay from "../components/WeatherDisplay.jsx";
 import { fetchWeatherData } from "../services/weatherApi";
+import bgImg from "..//assets/bgImg.png";
 
 function Dashboard() {
   const [weatherData, setWeatherData] = useState(null);
@@ -34,41 +34,32 @@ function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center ">
-      <NavBar />
+    <div
+      className="min-h-screen flex flex-col bg-[#40666a] bg-cover bg-center relative"
+      style={{
+        backgroundImage: `url(${bgImg})`, // Using imported image here
+      }}
+    >
+      {/* Overlay for background only */}
+      <div className="absolute inset-0 bg-[#40666a] opacity-95 z-0"></div>
 
-      {/* Introduction Section */}
-      <div className="bg-gradient-to-r from-blue-100 to-blue-300 text-gray-800 shadow-lg  p-8 mt-10 max-w-3xl mx-auto">
+      {/* Main Content */}
+      <div className="flex-grow flex flex-col items-center relative z-10">
         <div className="flex flex-col items-center">
-          {/* Icon */}
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/869/869869.png"
-            alt="StyleCast Icon"
-            className="h-16 w-16 mb-4"
-          />
-
-          {/* Heading */}
-          <h1 className="text-4xl font-bold text-blue-800 text-center drop-shadow-md">
-            Welcome to StyleCast!
-          </h1>
-
-          {/* Subheading */}
-          <p className="mt-4 text-xl font-medium text-gray-700 text-center">
-            Your daily guide to staying stylish, no matter the weather.
-          </p>
-
           {/* Additional Text */}
-          <p className="mt-2 text-center text-gray-600">
+          <p className="mt-10 text-center text-[#C9E8E0]">
             Check out real-time weather forecasts and outfit suggestions
             tailored to your location.
           </p>
-
-          {/* Decorative Divider */}
-          <div className="w-16 h-1 bg-blue-700 rounded-full mt-4"></div>
         </div>
         <WeatherCard weatherData={weatherData} />
         <WeatherDisplay weatherData={weatherData} />
       </div>
+
+      {/* Footer */}
+      <footer className="w-full bg-[#C9E8E0] text-[#40666A] text-center py-4 z-10">
+        © 2024 StyleCast. All rights reserved.
+      </footer>
     </div>
   );
 }
