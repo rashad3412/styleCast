@@ -11,13 +11,13 @@ function WeatherCard({ weatherData }) {
   });
 
   return (
-    <div className="rounded-lg shadow-lg mt-10 p-6 bg-[#c9e8e0] w-72 mx-auto border border-blue-100">
-      <h2 className="text-3xl text-center text-[#40666A] mb-6 tracking-wide font-poppins font-extrabold">
+    <div className="rounded-lg shadow-lg mt-10 p-6 bg-[#c9e8e0] w-72 mx-auto border border-blue-100 animate-fade-in">
+      <h2 className="text-3xl text-center text-[#40666A] mb-6 tracking-wide font-poppins font-extrabold ">
         StyleCast
       </h2>
 
       {/* Weather Icon Section */}
-      <div className="mt-4 flex justify-center animate-pulse">
+      <div className="mt-4 flex justify-center ">
         <img
           src="https://cdn-icons-png.flaticon.com/512/1163/1163624.png" // Transparent weather icon
           alt="Weather Icon"
@@ -28,7 +28,7 @@ function WeatherCard({ weatherData }) {
       {/* Additional Weather Info */}
       {weatherData && weatherData.hourly && (
         <div className="mt-4">
-          <p className="text-xl text-center text-[#40666A] mb-6 font-mono tracking-wide">
+          <p className="text-xl text-center text-[#40666A] mb-6 font-mono tracking-wide ">
             {/* Placeholder for current weather */}
             {weatherData.hourly.weathercode
               ? "Clear Sky"
