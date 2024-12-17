@@ -1,5 +1,3 @@
-// src/api/WeatherAPI.js
-
 const BASE_URL = "https://api.open-meteo.com/v1/forecast";
 
 export async function fetchWeatherData(latitude, longitude) {

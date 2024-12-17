@@ -1,81 +1,112 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import WeatherCard from "../components/WeatherCard.jsx";
 import WeatherDisplay from "../components/WeatherDisplay.jsx";
 import { fetchWeatherData } from "../services/weatherApi";
-import { fetchLocationData } from "../services/locationApi"; // Import the location data fetch function
-import bgImg from "..//assets/bgImg.png";
+import { fetchLocationData } from "../services/locationApi";
+import bgImg from "../assets/bgImg.png";
 
 function Dashboard() {
   const [weatherData, setWeatherData] = useState(null);
-  const [locationData, setLocationData] = useState(null); // State for location data
-  const [loading, setLoading] = useState(true);
+  const [locationData, setLocationData] = useState(null);
+  const [selectedState, setSelectedState] = useState("");
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const getWeatherAndLocationData = async () => {
+  const statesByTimeZone = {
+    "Eastern Time": ["New York", "Florida", "Virginia", "North Carolina"],
+    "Central Time": ["Texas", "Illinois", "Louisiana", "Minnesota"],
+    "Mountain Time": ["Colorado", "Arizona", "Utah", "Montana"],
+    "Pacific Time": ["California", "Oregon", "Washington", "Nevada"],
+  };
+
+  const handleStateChange = async (e) => {
+    const state = e.target.value;
+    setSelectedState(state);
+
+    if (state) {
       try {
         setLoading(true);
+        setError(null);
 
-        // Fetch location data
-        const location = await fetchLocationData();
+        // Fetch location data for the selected state
+        const location = await fetchLocationData(state);
+        const { latt: latitude, longt: longitude } = location;
 
-        // Optionally log the location to ensure it's correct
-        console.log("Location Data:", location);
-
-        // Fetch weather data using coordinates from location
-        const { latt: latitude, longt: longitude } = location; // Extract latitude and longitude
+        // Fetch weather data using the coordinates
         const weather = await fetchWeatherData(latitude, longitude);
 
-        // Update state
         setLocationData(location);
         setWeatherData(weather);
       } catch (err) {
-        setError(err.message);
+        console.log(err);
+        setError("Failed to fetch weather data. Please try again.");
       } finally {
         setLoading(false);
       }
-    };
-
-    getWeatherAndLocationData();
-  }, []);
-
-  if (loading) {
-    return <div>Loading weather and location data...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+    }
+  };
 
   return (
     <div
       className="min-h-screen flex flex-col bg-[#40666a] bg-cover bg-center relative"
       style={{
-        backgroundImage: `url(${bgImg})`, // Using imported image here
+        backgroundImage: `url(${bgImg})`,
       }}
     >
-      {/* Overlay for background only */}
+      {/* Overlay for background */}
       <div className="absolute inset-0 bg-[#40666a] opacity-95 z-0"></div>
 
       {/* Main Content */}
       <div className="flex-grow flex flex-col items-center relative z-10">
-        <div className="flex flex-col items-center animate-fade-in">
-          {/* Additional Text */}
-          <p className="mt-10 text-center text-[#C9E8E0]">
-            Check out real-time weather forecasts and outfit suggestions
-            tailored to your location.
-          </p>
-        </div>
-        <WeatherCard weatherData={weatherData} />
-        <WeatherDisplay weatherData={weatherData} />
-        {locationData && (
-          <p
-            className="mt-2 text-center text-[#C9E8E0] text-lg font-semibold tracking-wide 
-            bg-[#40666A]/80 px-4 py-2 rounded-lg shadow-md border border-[#C9E8E0]/40 
-            animate-fade-in"
+        <p className="mt-10 text-center text-[#C9E8E0]">
+          Select a state from the dropdown menu to view the weather.
+        </p>
+
+        {/* Dropdown Menu */}
+        <div className="mt-6">
+          <label htmlFor="timezone" className="text-[#C9E8E0] text-lg">
+            Select Time Zone:
+          </label>
+          <select
+            id="timezone"
+            className="ml-2 p-2 bg-white text-gray-800 rounded shadow"
+            onChange={handleStateChange}
+            value={selectedState}
           >
-            {locationData.city}, {locationData.state}
-          </p>
+            <option value="">-- Select a State --</option>
+            {Object.entries(statesByTimeZone).map(([timeZone, states]) => (
+              <optgroup key={timeZone} label={timeZone}>
+                {states.map((state) => (
+                  <option key={state} value={state}>
+                    {state}
+                  </option>
+                ))}
+              </optgroup>
+            ))}
+          </select>
+        </div>
+
+        {/* Loading State */}
+        {loading && (
+          <p className="mt-4 text-[#C9E8E0]">Loading weather data...</p>
+        )}
+
+        {/* Error Message */}
+        {error && <p className="mt-4 text-red-500">{error}</p>}
+
+        {/* Display Weather and Location Info */}
+        {weatherData && locationData && (
+          <div className="mt-6">
+            <WeatherCard weatherData={weatherData} />
+            <WeatherDisplay weatherData={weatherData} />
+            <p
+              className="mt-4 text-center text-[#C9E8E0] text-lg font-semibold tracking-wide 
+              bg-[#40666A]/80 px-4 py-2 rounded-lg shadow-md border border-[#C9E8E0]/40"
+            >
+              {" "}
+              {locationData.standard?.city || "USA"}
+            </p>
+          </div>
         )}
       </div>
 
