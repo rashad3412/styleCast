@@ -1,6 +1,6 @@
 export const fetchLocationData = async (state) => {
   // Use the state name to fetch data (you can append 'state' for more context if needed)
-  const apiUrl = `https://geocode.xyz/${state}?geoit=json&auth=872062381529377569192x102706`;
+  const apiUrl = `https://geocode.xyz/${state}?geoit=json&auth=925549592441766123211x72654 `;
 
   try {
     const response = await fetch(apiUrl);

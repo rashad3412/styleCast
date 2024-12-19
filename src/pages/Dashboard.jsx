@@ -32,9 +32,11 @@ function Dashboard() {
         // Fetch location data for the selected state
         const location = await fetchLocationData(state);
         const { latt: latitude, longt: longitude } = location;
+        console.log(location);
 
         // Fetch weather data using the coordinates
         const weather = await fetchWeatherData(latitude, longitude);
+        console.log(weather);
 
         // Get timezone from the latitude and longitude
         const timezone = moment.tz.guess({ lat: latitude, lon: longitude });
@@ -90,16 +92,20 @@ function Dashboard() {
           </select>
         </div>
 
-        {/* Loading State */}
+        {/* Loading State (Weather themed) */}
         {loading && (
-          <p className="mt-4 text-[#C9E8E0]">Loading weather data...</p>
+          <div className="mt-4 text-[#C9E8E0] flex flex-col items-center">
+            <div className="animate-spin rounded-full border-t-4 border-white w-12 h-12 mb-4 mt-44"></div>{" "}
+            {/* Cloud spinning animation */}
+            <p>Loading weather data...</p>
+          </div>
         )}
 
         {/* Error Message */}
         {error && <p className="mt-4 text-red-500">{error}</p>}
 
         {/* Display Weather and Location Info */}
-        {weatherData && locationData && (
+        {!loading && weatherData && locationData && (
           <div className="mt-6">
             <WeatherCard weatherData={weatherData} />
             <WeatherDisplay weatherData={weatherData} />
