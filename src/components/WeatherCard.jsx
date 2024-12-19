@@ -1,6 +1,10 @@
 import PropTypes from "prop-types";
 import partlyCloudy from "../assets/partlyCloudy.png";
 import fog from "../assets/fog.png";
+import sun from "../assets/sun.png";
+import clouds from "../assets/clouds.png";
+import lightRain from "../assets/lightRain.png";
+import snowy from "../assets/snowy.png";
 
 function WeatherCard({ weatherData }) {
   // Extract current weather condition and corresponding icon
@@ -8,8 +12,8 @@ function WeatherCard({ weatherData }) {
     switch (weatherCode) {
       case 0:
         return {
-          condition: "Clear Sky",
-          icon: partlyCloudy,
+          condition: "Sunny",
+          icon: sun,
         }; // Clear Sky Icon
 
       case 1:
@@ -21,7 +25,7 @@ function WeatherCard({ weatherData }) {
       case 3:
         return {
           condition: "Cloudy",
-          icon: "https://cdn-icons-png.flaticon.com/512/1163/1163650.png",
+          icon: clouds,
         }; // Cloudy Icon
       case 45:
       case 48:
@@ -34,44 +38,44 @@ function WeatherCard({ weatherData }) {
       case 55:
         return {
           condition: "Light Rain",
-          icon: "https://cdn-icons-png.flaticon.com/512/1163/1163630.png",
+          icon: lightRain,
         }; // Light Rain Icon
       case 56:
       case 57:
         return {
           condition: "Heavy Rain",
-          icon: "https://cdn-icons-png.flaticon.com/512/1163/1163655.png",
+          icon: lightRain,
         }; // Heavy Rain Icon
       case 61:
       case 63:
         return {
           condition: "Light Showers",
-          icon: "https://cdn-icons-png.flaticon.com/512/1163/1163646.png",
+          icon: lightRain,
         }; // Light Showers Icon
       case 66:
       case 67:
         return {
           condition: "Freezing Rain",
-          icon: "https://cdn-icons-png.flaticon.com/512/1163/1163641.png",
+          icon: lightRain,
         }; // Freezing Rain Icon
       case 71:
       case 73:
       case 75:
         return {
           condition: "Light Snow",
-          icon: "https://cdn-icons-png.flaticon.com/512/1163/1163637.png",
+          icon: snowy,
         }; // Light Snow Icon
       case 77:
         return {
           condition: "Snow Showers",
-          icon: "https://cdn-icons-png.flaticon.com/512/1163/1163627.png",
+          icon: snowy,
         }; // Snow Showers Icon
       case 80:
       case 81:
       case 82:
         return {
           condition: "Heavy Showers",
-          icon: "https://cdn-icons-png.flaticon.com/512/1163/1163655.png",
+          icon: snowy,
         }; // Heavy Showers Icon
       default:
         return {

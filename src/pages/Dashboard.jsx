@@ -31,6 +31,7 @@ function Dashboard() {
         // Fetch location data for the selected state
         const location = await fetchLocationData(state);
         const { latt: latitude, longt: longitude } = location;
+        console.log(location);
 
         // Fetch weather data using the coordinates
         const weather = await fetchWeatherData(latitude, longitude);

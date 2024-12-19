@@ -7,6 +7,7 @@ export const fetchLocationData = async (state) => {
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
+
     const data = await response.json();
     return data; // Return the location data
   } catch (error) {
@@ -22,6 +23,7 @@ export async function fetchWeatherData(latitude, longitude) {
 
   try {
     const response = await fetch(endpoint);
+
     if (!response.ok) {
       throw new Error(`Failed to fetch weather data: ${response.status}`);
     }
