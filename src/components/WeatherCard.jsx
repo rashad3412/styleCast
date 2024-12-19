@@ -5,6 +5,7 @@ import sun from "../assets/sun.png";
 import clouds from "../assets/clouds.png";
 import lightRain from "../assets/lightRain.png";
 import snowy from "../assets/snowy.png";
+import moment from "moment-timezone";
 
 function WeatherCard({ weatherData }) {
   // Extract current weather condition and corresponding icon
@@ -89,6 +90,13 @@ function WeatherCard({ weatherData }) {
     weatherData.hourly.weathercode[0]
   );
 
+  // Get the current timezone from `locationData` if available
+  const timezone = weatherData?.timezone || moment.tz.guess();
+
+  // Use moment for formatted day and time
+  const currentDay = moment().tz(timezone).format("dddd");
+  const currentTime = moment().tz(timezone).format("hh:mm A");
+
   return (
     <div className="rounded-lg shadow-lg mt-10 p-6 bg-[#c9e8e0] w-72 mx-auto border border-blue-100 animate-fade-in">
       <h2 className="text-3xl text-center text-[#40666A] mb-6 tracking-wide font-poppins font-extrabold">
@@ -115,18 +123,12 @@ function WeatherCard({ weatherData }) {
           <div className="flex flex-col items-center">
             {/* Display current day */}
             <p className="text-lg font-light font-roboto text-[#40666A] tracking-wider">
-              {new Date().toLocaleDateString("en-US", {
-                weekday: "long",
-              })}
+              {currentDay}
             </p>
 
             {/* Display current time */}
             <p className="text-lg font-light mt-4 text-[#40666A] font-roboto tracking-widest uppercase">
-              {new Date().toLocaleTimeString("en-US", {
-                hour: "2-digit",
-                minute: "2-digit",
-                hour12: true,
-              })}
+              {currentTime}
             </p>
           </div>
         </div>
@@ -139,6 +141,7 @@ WeatherCard.propTypes = {
   weatherData: PropTypes.shape({
     latitude: PropTypes.number.isRequired,
     longitude: PropTypes.number.isRequired,
+    timezone: PropTypes.string,
     hourly: PropTypes.shape({
       time: PropTypes.arrayOf(PropTypes.string),
       weathercode: PropTypes.arrayOf(PropTypes.number),

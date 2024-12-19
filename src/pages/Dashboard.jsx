@@ -4,6 +4,7 @@ import WeatherDisplay from "../components/WeatherDisplay.jsx";
 import { fetchWeatherData } from "../services/weatherApi";
 import { fetchLocationData } from "../services/locationApi";
 import bgImg from "../assets/bgImg.png";
+import moment from "moment-timezone";
 
 function Dashboard() {
   const [weatherData, setWeatherData] = useState(null);
@@ -13,10 +14,10 @@ function Dashboard() {
   const [error, setError] = useState(null);
 
   const statesByTimeZone = {
-    "Eastern Time": ["New York", "Florida", "Virginia", "North Carolina"],
-    "Central Time": ["Texas", "Illinois", "Louisiana", "Minnesota"],
-    "Mountain Time": ["Colorado", "Arizona", "Utah", "Montana"],
-    "Pacific Time": ["California", "Oregon", "Washington", "Nevada"],
+    "Eastern Time": ["New York", "North Carolina"],
+    "Central Time": ["Illinois", "Louisiana"],
+    "Mountain Time": ["Kansas", "Utah"],
+    "Pacific Time": ["Oregon", "Nevada"],
   };
 
   const handleStateChange = async (e) => {
@@ -31,12 +32,14 @@ function Dashboard() {
         // Fetch location data for the selected state
         const location = await fetchLocationData(state);
         const { latt: latitude, longt: longitude } = location;
-        console.log(location);
 
         // Fetch weather data using the coordinates
         const weather = await fetchWeatherData(latitude, longitude);
 
-        setLocationData(location);
+        // Get timezone from the latitude and longitude
+        const timezone = moment.tz.guess({ lat: latitude, lon: longitude });
+
+        setLocationData({ ...location, timezone });
         setWeatherData(weather);
       } catch (err) {
         console.log(err);
@@ -66,7 +69,7 @@ function Dashboard() {
         {/* Dropdown Menu */}
         <div className="mt-6">
           <label htmlFor="timezone" className="text-[#C9E8E0] text-lg">
-            Select Time Zone:
+            Select State:
           </label>
           <select
             id="timezone"
@@ -74,7 +77,7 @@ function Dashboard() {
             onChange={handleStateChange}
             value={selectedState}
           >
-            <option value="">-- Select a State --</option>
+            <option value="">-- Select a Timezone --</option>
             {Object.entries(statesByTimeZone).map(([timeZone, states]) => (
               <optgroup key={timeZone} label={timeZone}>
                 {states.map((state) => (
